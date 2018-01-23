@@ -24,6 +24,8 @@ class MainActivity : Activity() {
         const val TAG = "MainActivity"
         const val REQUEST_DISCOVERABLE_BT = 1
         const val SERVICE_UUID = "a0efb116-de0f-4e48-98c1-bd1e21cc64f4"
+
+        // 5 minutes
         const val DISCOVERABLE_DURATION = 300
     }
 
@@ -31,6 +33,7 @@ class MainActivity : Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        // Request bluetooth discovery
         val discoverableIntent = Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE)
                 .putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, DISCOVERABLE_DURATION)
         startActivityForResult(discoverableIntent, REQUEST_DISCOVERABLE_BT)
@@ -64,9 +67,7 @@ class MainActivity : Activity() {
 
         var bluetoothSocket: BluetoothSocket? = null
         try {
-            Log.d(TAG, "Socket opening")
             bluetoothSocket = serverSocket.accept()
-            Log.d(TAG, "Connected to client")
         } catch (e: Exception) {
             Log.e(TAG, e.toString())
         }
@@ -78,16 +79,14 @@ class MainActivity : Activity() {
         val inputStream = DataInputStream(bluetoothSocket?.inputStream)
         val handler = Handler()
 
-        Log.d(TAG, "Pre obj thread")
         object : Thread() {
             override fun run() {
+                Log.d(TAG, "Socket connection thread started")
                 super.run()
-                Log.d(TAG, "Service thread started")
                 val buffer = ByteArray(256)
                 var bytes: Int?
                 var readMessage: String?
                 try {
-                    Log.d(TAG, "Loop start")
                     while (true) {
                         bytes = inputStream.read(buffer)
                         readMessage = String(buffer, 0, bytes)
