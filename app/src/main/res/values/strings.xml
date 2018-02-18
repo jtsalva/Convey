@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Convey</string>
-    <string name="search">Search</string>
+    <string name="search">Tap to Search</string>
+    <string name="cancel">Cancel</string>
 </resources>
