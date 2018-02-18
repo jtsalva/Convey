@@ -35,7 +35,10 @@ class MainActivity : Activity() {
             Log.d(TAG, "Intent ${intent?.action}")
             when (intent?.action) {
                 Action.COUNTDOWN_SEARCH.toString() -> {}
-                Action.DEVICE_CONNECTED.toString() -> {}
+                Action.DEVICE_CONNECTED.toString() -> {
+                    Log.d(TAG, "Device Connected")
+                    startManageDeviceActivity()
+                }
             }
         }
 
@@ -66,7 +69,13 @@ class MainActivity : Activity() {
         super.onResume()
 
         if (!receiver.registered) {
-            registerReceiver(receiver, IntentFilter(Action.COUNTDOWN_SEARCH.toString()))
+            val intentFilter = IntentFilter()
+
+            enumValues<Action>().forEach {
+                intentFilter.addAction(it.toString())
+            }
+
+            registerReceiver(receiver, intentFilter)
             receiver.register()
         }
     }
@@ -116,6 +125,12 @@ class MainActivity : Activity() {
 
         landing_text.visibility = View.VISIBLE
         searching_bar.visibility = View.INVISIBLE
+    }
+
+    private fun startManageDeviceActivity() {
+        Log.i(TAG, "Starting manage device activity")
+        val intent = Intent(this, ManageDeviceActivity::class.java)
+        startActivity(intent)
     }
 
 }

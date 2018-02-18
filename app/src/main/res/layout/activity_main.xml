@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/activity_main"
+    android:background="@color/yellow"
     tools:context="space.jtsalva.convey.MainActivity">
 
     <TextView
@@ -20,6 +21,7 @@
         android:textIsSelectable="false"
         android:textSize="30sp"
         android:textStyle="bold"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -33,6 +35,9 @@
         android:layout_height="48dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
+        android:indeterminateTint="@color/white"
+        android:scaleX="2"
+        android:scaleY="2"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

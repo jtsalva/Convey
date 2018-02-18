@@ -1,5 +1,11 @@
 <resources>
+    <!-- Main Activity -->
     <string name="app_name">Convey</string>
     <string name="search">Tap to Search</string>
     <string name="cancel">Cancel</string>
+
+    <!-- Manage Device Activity -->
+    <string name="title_activity_manage_device">Manage Device</string>
+    <string name="stt">STT</string>
+    <string name="control">control</string>
 </resources>

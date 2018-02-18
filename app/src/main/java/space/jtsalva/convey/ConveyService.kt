@@ -20,11 +20,9 @@ class ConveyService : Service() {
 
     override fun onCreate() {
         super.onCreate()
-        Log.d(TAG, "Created")
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        Log.d(TAG, "Starting")
         startBTStrean()
         return super.onStartCommand(intent, flags, startId)
     }
@@ -38,14 +36,12 @@ class ConveyService : Service() {
     }
 
     private fun startBTStrean() {
-        Log.d(TAG, "Starting service")
+        Log.i(TAG, "Starting BT stream")
         val bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
-        Log.d(TAG, "Passed BT Adapter")
 
         val appUUID = UUID.fromString(SERVICE_UUID)
         val serverSocket: BluetoothServerSocket = bluetoothAdapter
                 .listenUsingInsecureRfcommWithServiceRecord(TAG, appUUID)
-        Log.d(TAG, "Now listening")
 
 //        var bluetoothSocket: BluetoothSocket? = null
 //        val handler = Handler()
@@ -54,6 +50,7 @@ class ConveyService : Service() {
             override fun run() {
                 super.run()
                 try {
+                    Log.i(TAG, "Service accepting UUID : $SERVICE_UUID")
                     openDataStrean(serverSocket.accept())
 
                     serverSocket.close()
@@ -68,15 +65,13 @@ class ConveyService : Service() {
     }
 
     private fun openDataStrean(bluetoothSocket: BluetoothSocket) {
-        Log.d(TAG, "Socket Accepted")
+        Log.i(TAG, "Opening data stream")
 
         val inputStream = DataInputStream(bluetoothSocket.inputStream)
-//        val handler = Handler()
 
-        Log.d(TAG, "Pre thread")
         object : Thread() {
             override fun run() {
-                Log.d(TAG, "Socket connection thread started")
+                Log.d(TAG, "data stream thread opened")
                 super.run()
                 val buffer = ByteArray(256)
                 var bytes: Int?
